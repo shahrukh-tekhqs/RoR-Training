@@ -1,7 +1,20 @@
-<h1>Showing article details</h1>
-<p><strong>Title: </strong><%= @article.title %></p>
-<p><strong>Description: </strong><%= @article.description %></p>
+<h1 class="text-center mt-4">Showing article details</h1>
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Delete', article_path(@article), method: :delete, data: {confirm: "Are you sure?"} %> |
-<%= link_to 'Return to listing', articles_path %>
+<div class="container">
+	<div class="card text-center mt-4 shadow mb-5 bg-white rounded">
+		<div class="card-header font-italic">
+			Article by Shahrukh
+		</div>
+		<div class="card-body">
+			<h5 class="card-title"><%= @article.title %></h5>
+			<p class="card-text"><%= truncate(@article.description,length:100) %></p>
+			<%= link_to 'Edit', edit_article_path(@article.id), class:"btn btn-secondary" %>
+			<%= link_to 'Delete', article_path(@article.id), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-danger" %>
+		</div>
+		<div class="card-footer text-muted">
+			<small>Created <%= time_ago_in_words(@article.created_at) %> ago , edited <%= time_ago_in_words(@article.updated_at) %> ago</small>
+		</div>
+	</div>
+</div>
+
+<%= link_to '[ Return to listing ]', articles_path, class: "row justify-content-center text-info"  %>
