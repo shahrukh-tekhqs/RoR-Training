@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="flickr_pagination">
+		<%= will_paginate @users, :container => false %>
+	</div>
+	<% @users.each do |user| %>
+		<div class="card text-center mt-4 shadow mb-5 bg-white rounded">
+			<div class="card-header font-italic">
+				<%= link_to user.username, user_path(user) %>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title"><%= gravatar_for user, size: 150 %></h5>
+				
+				<p class="mt-2 card-text"><%= pluralize(user.articles.count, "article") %></p>
+	 			<%= link_to 'View Profile', user_path(user.id), class:"btn btn-primary mt-2" %>
+				<% if logged_in? %>
+					<% if current_user == user %>
+						<%= link_to 'Edit Profile', edit_user_path(user.id), class:"btn btn-secondary mt-2" %>
+					<% end %>
+					<% if current_user.admin? %>
+						<%= link_to 'Delete Profile', user_path(user.id), method: :delete,data: {confirm: "Are you sure you want to delete user with all associated data?"}, class:"btn btn-danger mt-2" %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="card-footer text-muted">
+				<small>Joined <%= time_ago_in_words(user.created_at) %> ago</small>
+			</div>
+		</div>
+	<% end %>
+</div>
